@@ -8,8 +8,8 @@ const taskName = ({ name, taskId }: { name: string, taskId: string }) => {
       <p>${name}</p>
       <p>TaskID:${taskId}</p>
     <div>`;
-  onMount(element, () => {
 
+  onMount(element, () => {
     const subscription = subscribeEvent<{ taskId: string, checked: boolean }>(element, 'TASK_CHANGE', (event) => {
       if (event.payload.taskId === taskId) {
         element.style.textDecoration = event.payload.checked ? 'line-through' : 'none';
@@ -42,6 +42,7 @@ export const taskListItem = ({ taskId, name }: { taskId: string, name: string })
     const listItem = document.getElementById(elementId);
     listItem?.setAttribute('data-changed', 'true');
   }
+
   const handleChangeStatus = (event: KeyboardEvent, taskId: string) => {
     const { checked } = event.target as HTMLInputElement;
     publishEvent<{ checked: boolean, taskId: string }>({ type: 'TASK_CHANGE', payload: { checked, taskId } });
